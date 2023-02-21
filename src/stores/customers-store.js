@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { myAxios } from '../composables/axios'
 
 
-export const useAdminsStore = defineStore('AdminsStore', {
+export const useCustomersStore = defineStore('CustomersStore', {
   state: () => {
     return{
         singleData: {
@@ -25,7 +25,7 @@ export const useAdminsStore = defineStore('AdminsStore', {
     //POST DATA
     async addData(){
       try {
-        const data = await myAxios.post('/admins/', this.singleData)
+        const data = await myAxios.post('/customers/', this.singleData)
         console.log(data.data)
         console.log('New Data Successfuly Posted')
         this.getData()
@@ -37,7 +37,7 @@ export const useAdminsStore = defineStore('AdminsStore', {
     // GET ALL DATA
     async getData(){
       try {
-        const data = await myAxios.get('/admins/')
+        const data = await myAxios.get('/customers/')
         this.allData = data.data
       } catch (error) {
         console.log(error)
@@ -57,9 +57,9 @@ export const useAdminsStore = defineStore('AdminsStore', {
     //UPDATE DATA
      async updateData(row){
       try {
-        const data = await myAxios.patch('/admins/' + row._id, this.singleData)
+        const data = await myAxios.patch('/customers/' + row._id, this.singleData)
         console.log(data.data)
-        console.log('Admin Successfuly Updated')
+        console.log('Data Successfuly Updated')
         this.getData()
       } catch (error) {
         console.log(error)
@@ -69,8 +69,8 @@ export const useAdminsStore = defineStore('AdminsStore', {
     //DELETE DATA
     async deleteData(row){   
       try {
-        const data = await myAxios.delete('/admins/' + row._id)
-        console.log('Admin Successfuly Deleted')
+        const data = await myAxios.delete('/customers/' + row._id)
+        console.log('Data Successfuly Deleted')
         this.getData()
       } catch (error) {
         
