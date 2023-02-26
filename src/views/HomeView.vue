@@ -1,9 +1,21 @@
 <script setup>
 
-  import { useAdminsStore } from '../stores/admins-store';
+  import axios from 'axios';
+import { useAdminsStore } from '../stores/admins-store';
 
   const admins = useAdminsStore()
   admins.getData()
+
+  const onFileSelected = (e) => {
+    const file = e.target.files[0];
+    admins.singleData.file = file
+  }
+
+
+
+  const preview = () => {
+    console.log(admins.singleData.file)
+  }
 
 </script>
 
@@ -11,7 +23,7 @@
   <div class="home">
     
     <h1>Admins</h1>
-
+    <form @submit.prevent="admins.onSubmit" enctype="multipart/form-data">
     <div class="row">
       <div class="col"><label for="" >First Name </label></div>
       <div class="col"><input type="text" v-model="admins.singleData.firstname"></div>
@@ -24,9 +36,15 @@
       <div class="col"><label for="">Email </label></div>
       <div class="col"><input type="email" v-model="admins.singleData.email"></div>
     </div>
+    <div class="row">
+      <div class="col"><label for="">Avatar </label></div>
+      <div class="col"><input type="file" @change="onFileSelected"></div>
+    </div>
     <hr>
-    <button type="button" @click="admins.addData">Save</button>
+    <button type="button" @click="preview(e)">Preview</button>
+    <button type="submit" @click="admins.addData">Save</button>
     <hr>
+  </form>
 
     <table border="1">
         <thead>

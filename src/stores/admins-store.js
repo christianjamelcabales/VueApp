@@ -1,4 +1,5 @@
 
+import axios from 'axios'
 import { defineStore } from 'pinia'
 import { myAxios } from '../composables/axios'
 
@@ -9,7 +10,8 @@ export const useAdminsStore = defineStore('AdminsStore', {
         singleData: {
         firstname: null,
         lastname: null,
-        email: null
+        email: null,
+        file: null
       },
       updatedData: {
         firstname: null,
@@ -21,7 +23,7 @@ export const useAdminsStore = defineStore('AdminsStore', {
   },
 
   actions: {
-
+    
     //POST DATA
     async addData(){
       try {
@@ -34,6 +36,7 @@ export const useAdminsStore = defineStore('AdminsStore', {
       }
     },
 
+  
     // GET ALL DATA
     async getData(){
       try {
@@ -77,11 +80,38 @@ export const useAdminsStore = defineStore('AdminsStore', {
       }
     },
 
+
+    async upload(){
+      try {
+        const data = await myAxios.post('/admins/', this.singleData)
+        console.log(data.data)
+        console.log('New Data Successfuly Posted')
+        this.getData()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async onSubmit() {
+      const formData = new FormData()
+      formData.append('file',this.singleData.file)
+      try {
+        await myAxios.post('/admins/', formData)
+        console.log('Uploaded')
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+
+
+
+  
     clickrow(data){
       this.singleData.firstname = data.firstname
       this.singleData.lastname = data.lastname
       this.singleData.email = data.email
-    }
+    },
 
   },
 })
