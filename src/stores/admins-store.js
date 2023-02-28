@@ -99,15 +99,6 @@ export const useAdminsStore = defineStore('AdminsStore', {
         
       }
     },
-
-
-
-
-
-
-
-
-
   
     clickrow(data){
       this.singleData.firstname = data.firstname
