@@ -11,7 +11,8 @@ export const useAdminsStore = defineStore('AdminsStore', {
         firstname: null,
         lastname: null,
         email: null,
-        file: null
+        file: null,
+        filename: null
       },
       updatedData: {
         firstname: null,
@@ -24,18 +25,37 @@ export const useAdminsStore = defineStore('AdminsStore', {
 
   actions: {
     
-    //POST DATA
-    async addData(){
+    //POST DATA WITHOUT IMAGE
+   /* async addData(){
       try {
         const data = await myAxios.post('/admins/', this.singleData)
         console.log(data.data)
         console.log('New Data Successfuly Posted')
+        console.log(this.singleData.file)
         this.getData()
       } catch (error) {
         console.log(error)
       }
-    },
+    },*/
 
+    //POST DATA WITH IMAGE
+    async onSubmit() {
+      const formData = new FormData()
+      
+      formData.append('file',this.singleData.file)
+      formData.append('firstname',this.singleData.firstname)
+      formData.append('lastname',this.singleData.lastname)
+      formData.append('email',this.singleData.email)
+
+      try {
+        await myAxios.post('/admins/', formData)
+        this.getData()
+        console.log('Uploaded')
+        
+      } catch (error) {
+        console.log(error)
+      }
+    },
   
     // GET ALL DATA
     async getData(){
@@ -81,27 +101,9 @@ export const useAdminsStore = defineStore('AdminsStore', {
     },
 
 
-    async upload(){
-      try {
-        const data = await myAxios.post('/admins/', this.singleData)
-        console.log(data.data)
-        console.log('New Data Successfuly Posted')
-        this.getData()
-      } catch (error) {
-        console.log(error)
-      }
-    },
 
-    async onSubmit() {
-      const formData = new FormData()
-      formData.append('file',this.singleData.file)
-      try {
-        await myAxios.post('/admins/', formData)
-        console.log('Uploaded')
-      } catch (error) {
-        console.log(error)
-      }
-    },
+
+
 
 
 

@@ -1,7 +1,9 @@
 <script setup>
 
-  import axios from 'axios';
+
+
 import { useAdminsStore } from '../stores/admins-store';
+const myPath = import.meta.env.VITE_path;
 
   const admins = useAdminsStore()
   admins.getData()
@@ -11,11 +13,6 @@ import { useAdminsStore } from '../stores/admins-store';
     admins.singleData.file = file
   }
 
-
-
-  const preview = () => {
-    console.log(admins.singleData.file)
-  }
 
 </script>
 
@@ -41,14 +38,15 @@ import { useAdminsStore } from '../stores/admins-store';
       <div class="col"><input type="file" @change="onFileSelected"></div>
     </div>
     <hr>
-    <button type="button" @click="preview(e)">Preview</button>
-    <button type="submit" @click="admins.addData">Save</button>
+
+    <button type="submit" @click="">Save</button>
     <hr>
   </form>
 
     <table border="1">
         <thead>
         <tr>
+          <th></th>
         <th>firstname</th>
         <th>lastname</th>
         <th>email</th>
@@ -57,9 +55,11 @@ import { useAdminsStore } from '../stores/admins-store';
       </thead>
       <tbody>
         <tr v-for="data in admins.allData" @click="admins.clickrow(data)">
+            <td> <img style="height: 50px;  width: 50px;" v-bind:src="myPath + data.file" alt="picture"> </td>
             <td> {{ data.firstname }} </td>
             <td> {{ data.lastname }} </td>
             <td> {{ data.email }} </td>
+
             <td>
               <button type="button" @click="admins.updateData(data)">Update </button>
             </td>
